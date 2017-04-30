@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- maybe someday
+	 <link rel="icon" href="../../favicon.ico">
+	 -->
+
+    <title>Soccer</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="grid.css" rel="stylesheet">
+
+    <script
+       src="https://code.jquery.com/jquery-1.12.4.js"
+       integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+       crossorigin="anonymous"></script>
+
+    <script src="bootstrap.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      Game:
+      <button id="start" type="button" class="btn btn-default">Start</button>
+      <button type="button" class="btn btn-default">End H1</button>
+      <button type="button" class="btn btn-default">Start H2</button>
+      <button type="button" class="btn btn-default">End</button>
+    </div>
+
+    <div class="container">
+      Who:
+      <button type="button" class="btn btn-default">We</button>
+      <button type="button" class="btn btn-default">They</button>
+      <button type="button" class="btn btn-default">Kent</button>
+      <button type="button" class="btn btn-default">John Scott</button>
+      <button type="button" class="btn btn-default">George</button>
+      <button type="button" class="btn btn-default">Coda</button>
+      <button type="button" class="btn btn-default">EJ</button>
+      <button type="button" class="btn btn-default">Josh</button>
+      <button type="button" class="btn btn-default">Matthew</button>
+      <button type="button" class="btn btn-default">Tyler</button>
+      <button type="button" class="btn btn-default">Benji</button>
+      <button type="button" class="btn btn-default">Evan</button>
+      <button type="button" class="btn btn-default">Miles</button>
+      <button type="button" class="btn btn-default">Désiré</button>
+      <button type="button" class="btn btn-default">Forest</button>
+    </div>
+
+    <div class="container">
+      What:
+      <button type="button" class="btn btn-default">Shoot</button>
+      <button type="button" class="btn btn-default">Score</button>
+      <button type="button" class="btn btn-default">Miss</button>
+      <button type="button" class="btn btn-default">Save</button>
+      <button type="button" class="btn btn-default">Benched</button>
+      <button type="button" class="btn btn-default">On field</button>
+      <button type="button" class="btn btn-default">Goalie</button>
+      <button type="button" class="btn btn-default">Hurt</button>
+      <button type="button" class="btn btn-default">OK</button>
+    </div>
+
+    <div class="container">
+      Score:
+      <button type="button" class="btn btn-default">-</button>
+      <button type="button" class="btn btn-default">0</button>
+      <button type="button" class="btn btn-default">1</button>
+      <button type="button" class="btn btn-default">2</button>
+      <button type="button" class="btn btn-default">3</button>
+      <button type="button" class="btn btn-default">4</button>
+      <button type="button" class="btn btn-default">5</button>
+      <button type="button" class="btn btn-default">6</button>
+      <button type="button" class="btn btn-default">7</button>
+      <button type="button" class="btn btn-default">8</button>
+      <button type="button" class="btn btn-default">9</button>
+      <button type="button" class="btn btn-default">10</button>
+    </div>
+
+    <div class="container">
+      <button id="clear" type="button" class="btn btn-primary">Clear</button>
+      <button id="delete" type="button" class="btn btn-primary">Delete</button>
+      <button type="button" class="btn btn-primary">Text</button>
+      <button id="go" type="button" class="btn btn-primary">Go</button>
+    </div>
+
+    <div id="prep-div">
+    </div>
+    
+    <div id="event-div">
+    </div>
+      
+    <script>
+      document.queue = [];
+      $("button.btn-default").on("click", function (e) {
+          document.queue.push(e.target.textContent);
+          $("#prep-div").append(" "+e.target.textContent);
+      });
+      $("#clear").on("click", function(e) {
+          document.queue = [];
+          $("#prep-div").empty();
+      });
+      $("#delete").on("click", function(e) {
+          $("#event-div").children().first().remove();
+      });
+      $("#go").on("click", function(e) {
+          var line = document.queue.reduce(function(accumulator, currentValue) {
+              return accumulator + " " + currentValue;       
+          });
+          var currentdate = new Date(); 
+          var datetime = currentdate.toLocaleTimeString();
+          var ed = $("#event-div")
+          ed.prepend("<div>"+datetime+" "+line+"</div>");
+          document.queue = []
+          $("#prep-div").empty();
+
+	  $.ajax({url: "/go", data: {line: line}});
+      });
+    </script>
+
+  </body>
+</html>
