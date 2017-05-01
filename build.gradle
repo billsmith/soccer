@@ -14,7 +14,9 @@ apply plugin: 'application'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
-    compile 'com.twilio.sdk:twilio:(7.0,7.9)', 'org.eclipse.jetty:jetty-server:9.4.4.v20170414', 'org.eclipse.jetty:jetty-security:9.4.4.v20170414'
+    compile 'com.twilio.sdk:twilio:(7.0,7.9)',
+            'org.eclipse.jetty:jetty-server:9.4.4.v20170414',
+            'org.eclipse.jetty:jetty-security:9.4.4.v20170414'
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
