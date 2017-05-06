@@ -84,10 +84,10 @@ public class SoccerServer {
 
         final Properties properties = new Properties();
         properties.load(new FileReader(propertiesFile));
-        final String accountSID = properties.getProperty("accountSID");
-        final String authToken = properties.getProperty("authToken");
-        final String phoneTo = properties.getProperty("phoneTo");
-        final String phoneFrom = properties.getProperty("phoneFrom");
+        final String accountSID = properties.getProperty("accountSID").trim();
+        final String authToken = properties.getProperty("authToken").trim();
+        final String phoneTo = properties.getProperty("phoneTo").trim();
+        final String phoneFrom = properties.getProperty("phoneFrom").trim();
 
         final SendSMS sendSMS = new SendSMS(accountSID, authToken, phoneTo, phoneFrom);
 
