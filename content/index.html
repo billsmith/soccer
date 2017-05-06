@@ -31,10 +31,10 @@
   <body>
     <div class="container">
       Game:
-      <button id="start" type="button" class="btn btn-default">Start</button>
-      <button type="button" class="btn btn-default">End H1</button>
-      <button type="button" class="btn btn-default">Start H2</button>
-      <button type="button" class="btn btn-default">End</button>
+      <button id="start" type="button" class="btn btn-default">Game Start</button>
+      <button type="button" class="btn btn-default">Halftime</button>
+      <button type="button" class="btn btn-default">Start 2nd half</button>
+      <button type="button" class="btn btn-default">Game over</button>
     </div>
 
     <div class="container">
@@ -92,6 +92,11 @@
       <button id="go" type="button" class="btn btn-primary">Go</button>
     </div>
 
+    <div class="container">
+       <input id="text" type="text" size="75" />
+       <button id="submit" class="btn">Submit</button>
+    </div>
+
     <div id="prep-div">
     </div>
     
@@ -99,6 +104,14 @@
     </div>
       
     <script>
+      function sendLine(line) {
+          var currentdate = new Date(); 
+          var datetime = currentdate.toLocaleTimeString();
+          var ed = $("#event-div")
+          ed.prepend("<div>"+datetime+" "+line+"</div>");
+
+	  $.ajax({url: "/go", data: {line: line}});
+      }
       document.queue = [];
       $("button.btn-default").on("click", function (e) {
           document.queue.push(e.target.textContent);
@@ -115,14 +128,14 @@
           var line = document.queue.reduce(function(accumulator, currentValue) {
               return accumulator + " " + currentValue;       
           });
-          var currentdate = new Date(); 
-          var datetime = currentdate.toLocaleTimeString();
-          var ed = $("#event-div")
-          ed.prepend("<div>"+datetime+" "+line+"</div>");
           document.queue = []
           $("#prep-div").empty();
-
-	  $.ajax({url: "/go", data: {line: line}});
+	  sendLine(line);
+      });
+      $("#submit").on("click", function(e) {
+          var line = $("#text").val();
+          $("#text").val("");
+          sendLine(line);
       });
     </script>
 
